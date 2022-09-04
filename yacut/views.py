@@ -9,6 +9,7 @@ from .forms import URLForm
 from .models import URL_map
 # тест
 
+
 @app.route('/', methods=['GET', 'POST'])
 def get_unique_short_id():
     base_url = request.base_url
