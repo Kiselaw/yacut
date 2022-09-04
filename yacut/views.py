@@ -7,7 +7,6 @@ from . import app, db
 from .constants import LENGTH, SYMBOLS
 from .forms import URLForm
 from .models import URL_map
-# тест
 
 
 @app.route('/', methods=['GET', 'POST'])
