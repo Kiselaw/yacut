@@ -31,8 +31,8 @@ def get_short_link():
     elif 'url' not in data:
         raise InvalidAPIUsage('"url" является обязательным полем!')
     elif (
-        'custom_id' in data and data['custom_id'] is not None
-        and len(data['custom_id']) > 0
+        'custom_id' in data and data['custom_id'] is not None and
+        len(data['custom_id']) > 0
     ):
         if (
             len(data['custom_id']) > 16 or not
