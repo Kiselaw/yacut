@@ -1,14 +1,12 @@
-from . import app, db
-from flask import request, render_template, flash, redirect, abort
+import random
+from urllib.parse import urljoin
 
+from flask import flash, redirect, render_template, request
+
+from . import app, db
+from .constants import LENGTH, SYMBOLS
 from .forms import URLForm
 from .models import URL_map
-from urllib.parse import urljoin
-import string
-import random
-import re
-
-LENGTH = 6
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -21,20 +19,13 @@ def get_unique_short_id():
             if URL_map.query.filter_by(short=short).first():
                 flash(
                     f'Имя {short} уже занято!',
-                    'error-message'
-                )
-                return render_template('index.html', form=form)
-            if not re.match(r'[a-zA-Z0-9]+$', short):
-                flash(
-                    'Указано недопустимое имя для короткой ссылки',
-                    'error-message'
+                    'duplicate-message'
                 )
                 return render_template('index.html', form=form)
         else:
-            symbols = string.ascii_letters + string.digits
-            short = ''.join(random.choice(symbols) for _ in range(LENGTH))
+            short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
             while URL_map.query.filter_by(short=short).first():
-                short = ''.join(random.choice(symbols) for _ in range(LENGTH))
+                short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
         url = URL_map(
             original=form.original_link.data,
             short=short,
@@ -48,8 +39,6 @@ def get_unique_short_id():
 @app.route('/<string:id>')
 def redirect_to_source(id):
     short = id
-    db_object = URL_map.query.filter_by(short=short).first()
-    if not db_object:
-        abort(404)
+    db_object = URL_map.query.filter_by(short=short).first_or_404()
     source = db_object.original
     return redirect(source)

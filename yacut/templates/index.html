@@ -34,7 +34,7 @@
                       <span style="color:red">{{ error }}</span>
                     {% endfor %}
                   {% endif %}
-                  {% with messages = get_flashed_messages(category_filter=["error-message"]) %}
+                  {% with messages = get_flashed_messages(category_filter=["duplicate-message"]) %}
                     {% if messages %}
                       {% for message in messages %}
                         <span style="color:red">{{ message }}</span>
