@@ -1,10 +1,9 @@
-import random
 from urllib.parse import urljoin
 
+from .add_functions import get_random_string
 from flask import flash, redirect, render_template, request
 
 from . import app, db
-from .constants import LENGTH, SYMBOLS
 from .forms import URLForm
 from .models import URL_map
 
@@ -23,9 +22,9 @@ def get_unique_short_id():
                 )
                 return render_template('index.html', form=form)
         else:
-            short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
+            short = get_random_string()
             while URL_map.query.filter_by(short=short).first():
-                short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
+                short = get_random_string()
         url = URL_map(
             original=form.original_link.data,
             short=short,

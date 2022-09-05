@@ -1,12 +1,11 @@
-import random
 import re
 from http import HTTPStatus
 from urllib.parse import urljoin
 
+from .add_functions import get_random_string
 from flask import jsonify, request
 
 from . import app, db
-from .constants import LENGTH, SYMBOLS
 from .error_handlers import InvalidAPIUsage
 from .models import URL_map
 
@@ -47,9 +46,9 @@ def get_short_link():
         else:
             short = data['custom_id']
     else:
-        short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
+        short = get_random_string()
         while URL_map.query.filter_by(short=short).first():
-            short = ''.join(random.choice(SYMBOLS) for _ in range(LENGTH))
+            short = get_random_string()
     url = URL_map(
         original=data['url'],
         short=short,

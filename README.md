@@ -63,3 +63,7 @@ SECRET_KEY=DEFAULT
 ### License
 
 MIT
+
+### Author
+
+Alexander Kiselov, beginner Python developer

@@ -13,11 +13,11 @@
 </head>
 
 <body>
-  {% include "header.html" %} 
+  {% include "includes/header.html" %} 
   {% block content %}
     Контента нет :(
   {% endblock content %}
-  {% include "footer.html" %}
+  {% include "includes/footer.html" %}
 </body>
 <script src="{{ url_for('static', filename='jquery-3.6.1.min.js') }}" 
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
