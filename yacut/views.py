@@ -23,8 +23,6 @@ def get_unique_short_id():
                 return render_template('index.html', form=form)
         else:
             short = get_random_string()
-            while URL_map.query.filter_by(short=short).first():
-                short = get_random_string()
         url = URL_map(
             original=form.original_link.data,
             short=short,
